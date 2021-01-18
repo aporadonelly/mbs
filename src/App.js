@@ -1,26 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { userStatus } from './reducers/constants';
+// import logo from './logo.svg';
 import './App.css';
+import { verifyAuth, login, logout, updateAuth } from './actions';
+import LoginForm from './components';
 
-function App() {
+const App = () => {
+    const dispatch = useDispatch();
+    const auth = useSelector(state => state.auth);
+
+    useEffect(() => {
+        dispatch(verifyAuth());
+    }, []);
+
+    const handleUpdateField = event => {
+        dispatch(updateAuth(event.target.name, event.target.value));
+    };
+
+    const handleLogin = () => {
+        dispatch(login(auth.username, auth.password));
+    };
+
+    const handleLogout = () => {
+        dispatch(logout());
+    };
+
+    if (auth.status !== userStatus.LOGGED_IN) {
+        return (
+            <LoginForm onLogin={() => handleLogin()} onUpdateField={e => handleUpdateField(e)} />
+        );
+    }
+
     return (
-        <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>
-                    Edit <code>src/App.js</code> and save to reload.
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer">
-                    Learn React
-                </a>
-            </header>
-            <p>Sample</p>
+        <div>
+            Main page
+            <button type="button" onClick={handleLogout}>
+                logout
+            </button>
         </div>
     );
-}
+};
 
 export default App;
