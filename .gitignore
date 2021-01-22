@@ -7,6 +7,10 @@
 
 # testing
 /coverage
+/__snapshots__
+*.test.js.snap
+.scannerwork
+output
 
 # production
 /build
@@ -25,3 +29,4 @@ yarn-error.log*
 
 /.idea
 .eslintcache
+sonar.sh
