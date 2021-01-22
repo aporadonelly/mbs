@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useRouteMatch, Redirect } from 'react-router-dom';
+import { useHistory, useRouteMatch, Redirect, BrowserRouter } from 'react-router-dom';
 import { userStatus } from './reducers/constants';
-import { verifyAuth, login, logout, updateAuth } from './actions';
+import { verifyAuth, login, updateAuth } from './actions';
 import LoginForm from './components';
+import RenderPage from './route/RenderPage';
 
 const App = () => {
     const dispatch = useDispatch();
@@ -34,11 +35,6 @@ const App = () => {
         }
     };
 
-    const handleLogout = () => {
-        dispatch(logout());
-        history.push('login');
-    };
-
     if (auth.status !== userStatus.LOGGED_IN) {
         return (
             <LoginForm onLogin={e => handleLogin(e)} onUpdateField={e => handleUpdateField(e)} />
@@ -46,12 +42,9 @@ const App = () => {
     }
 
     return (
-        <div>
-            Main page
-            <button type="button" onClick={handleLogout}>
-                logout
-            </button>
-        </div>
+        <BrowserRouter>
+            <RenderPage data-test="App" />
+        </BrowserRouter>
     );
 };
 
