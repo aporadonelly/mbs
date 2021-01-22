@@ -5,7 +5,12 @@ const colors = {
     text: '#3E4141'
 };
 
+const fontSizes = {
+    errorText: '12px'
+};
+
 // Material UI Overrides are found in index.js
 // Button for forms = MuiButton (containedPrimary)
+// InputField for forms = MuiOutlinedInput (input)
 
-export default colors;
+export { colors, fontSizes };

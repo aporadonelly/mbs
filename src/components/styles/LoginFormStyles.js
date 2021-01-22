@@ -1,7 +1,8 @@
 import { createStyles, makeStyles } from '@material-ui/core/styles';
-import colors from '../../assets/styleGuide';
+import { colors } from '../../assets/styleGuide';
 
-const LoginFormStyles = makeStyles(theme =>
+// Style for Login Component
+const LoginFormStyles = makeStyles(
     createStyles({
         pageContainer: {
             display: 'flex',
@@ -10,28 +11,39 @@ const LoginFormStyles = makeStyles(theme =>
         container: {
             display: 'flex',
             width: 400,
-            margin: `${theme.spacing(0)} auto`,
+            margin: '0 auto',
             alignSelf: 'center',
             justifyContent: 'center'
         },
         loginBtn: {
-            marginTop: theme.spacing(2),
-            flexGrow: 1
+            marginTop: '4rem',
+            flexGrow: 1,
+            width: '100%'
         },
         header: {
-            textAlign: 'center',
-            background: colors.primary,
-            color: '#fff'
+            textAlign: 'center'
+        },
+        logo: {
+            width: 145,
+            height: 95
         },
         card: {
-            marginTop: theme.spacing(5)
+            textAlign: 'center',
+            width: '100%'
+        },
+        fieldContainer: {
+            textAlign: 'left',
+            margin: '0.5rem 0'
         },
         subText: {
             textAlign: 'center',
-            marginTop: theme.spacing(5)
+            marginTop: '4rem'
         },
         linkText: {
             color: colors.primary
+        },
+        label: {
+            padding: '1rem 0'
         }
     })
 );

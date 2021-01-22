@@ -7,7 +7,6 @@ Amplify.configure({
 });
 // Login User
 export const login = (username, password) => async dispatch => {
-    console.log('login called', username, password);
     try {
         const user = await Auth.signIn(username, password);
         const session = await Auth.currentSession();
@@ -55,7 +54,7 @@ export const logout = () => async dispatch => {
     }
 };
 
-// Update Login Form
+// Update Login Reducer
 export const updateAuth = (prop, value) => ({
     type: authActionType.UPDATE_AUTH,
     payload: { prop, value }

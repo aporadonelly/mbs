@@ -10,7 +10,7 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import reducers from './reducers';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import colors from './assets/styleGuide';
+import { colors } from './assets/styleGuide';
 
 require('dotenv').config();
 
@@ -24,6 +24,13 @@ const styling = createMuiTheme({
                 '&:hover': {
                     backgroundColor: colors.primary
                 }
+            }
+        },
+        MuiOutlinedInput: {
+            input: {
+                height: '0.5em',
+                padding: '1em',
+                caretColor: colors.primary
             }
         }
     },

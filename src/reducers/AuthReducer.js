@@ -9,12 +9,16 @@ const INITIAL_STATE = {
         jwtToken: null,
         idToken: null,
         refreshToken: null,
-        permissions: null,
-        role: null
+        role: null,
+        firstName: '',
+        lastName: ''
     },
     status: userStatus.LOGGED_OUT,
     result: '',
-    message: ''
+    message: '',
+    error: {},
+    isFormSubmitted: false,
+    isAuthInvalid: false
 };
 
 export default function (state = INITIAL_STATE, action) {
@@ -26,7 +30,6 @@ export default function (state = INITIAL_STATE, action) {
             };
         case authActionType.LOGIN_USER_SUCCESS: {
             const { user, session } = action.payload;
-            console.log('login called', user);
             return {
                 ...state,
                 status: userStatus.LOGGED_IN,
@@ -35,8 +38,9 @@ export default function (state = INITIAL_STATE, action) {
                     jwtToken: session.accessToken.jwtToken,
                     idToken: session.idToken.jwtToken,
                     refreshToken: session.refreshToken.token,
-                    permissions: session.idToken.payload[`custom:modules`],
-                    role: session.idToken.payload[`custom:role`]
+                    role: session.idToken.payload[`custom:role`],
+                    firstName: user.attributes.given_name,
+                    lastName: user.attributes.family_name
                 },
                 result: results.SUCCESS
             };
@@ -45,13 +49,15 @@ export default function (state = INITIAL_STATE, action) {
             return {
                 ...state,
                 status: userStatus.UNAUTHORIZED,
-                result: results.FAIL
+                result: results.FAIL,
+                error: action.payload,
+                isAuthInvalid: true
             };
         }
         case authActionType.LOGOUT_USER_SUCCESS: {
             return {
                 ...INITIAL_STATE,
-                result: results.Success
+                result: results.SUCCESS
             };
         }
         case authActionType.LOGOUT_USER_FAIL:
