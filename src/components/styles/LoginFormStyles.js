@@ -24,8 +24,7 @@ const LoginFormStyles = makeStyles(
             textAlign: 'center'
         },
         logo: {
-            width: 145,
-            height: 95
+            width: '50%'
         },
         card: {
             textAlign: 'center',
