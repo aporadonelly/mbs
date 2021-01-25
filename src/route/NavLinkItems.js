@@ -1,22 +1,22 @@
 /**
  * @Name NavLinkItems
  * @Description Gets the final mapped items from RouteData.js then passes it to MainNavBar component
- * @Props { path, content, pic } gets the path, sidebar name and the logo of each data from RouteData.js that is mapped by MainNavBar Component
+ * @Props ( path, content, pic ) gets the path, sidebar name and the logo of each data from RouteData.js that is mapped by MainNavBar Component
  * @Returns Navlinks for MainNavBar component
  * @Author RJ
  * @UpdatedBy RJ
  */
 
-/* eslint-disable react/no-children-prop */
 import { ListItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import MainNavBarStyles from '../components/styles/MainNavBarStyles';
 
-const NavLinkItems = ({ path, content, pic }) => {
+const NavLinkItems = ({ path, content, pic, exact }) => {
     const classes = MainNavBarStyles();
     return (
         <NavLink
+            exact={exact}
             data-test="NavLink"
             activeClassName={classes.selected}
             className={classes.linkContent}

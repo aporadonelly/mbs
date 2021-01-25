@@ -7,10 +7,8 @@
  * @UpdatedBy RJ
  */
 
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable react/no-children-prop */
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import Layout from '../layout/Layout';
 import Users from '../pages/Users';
 import { PageManager, Main } from './RouteData';
@@ -18,25 +16,26 @@ import { PageManager, Main } from './RouteData';
 const RenderPage = () => (
     <Layout data-test="Page_Layout">
         <Switch>
-            {Main.map((items, index) => (
+            {Main.map(items => (
                 <Route
-                    key={index}
-                    path={items.path}
+                    key={items.id}
                     exact={items.exact}
+                    path={items.path}
                     component={items.main}
                     data-test={`MainPage_${items.sidebar}`}
                 />
             ))}
-            {PageManager.map((items, index) => (
+            {PageManager.map(items => (
                 <Route
-                    key={index}
-                    path={items.path}
+                    key={items.id}
                     exact={items.exact}
+                    path={items.path}
                     component={items.main}
                     data-test={`PageManager_Page_${items.sidebar}`}
                 />
             ))}
             <Route data-test="ManagePage_Users" path="/users" component={() => <Users />} />
+            <Redirect from="/" to="/login" />
         </Switch>
     </Layout>
 );

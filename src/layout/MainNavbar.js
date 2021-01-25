@@ -1,14 +1,12 @@
 /**
  * @Name MainNavBar
  * @Description Renders the Navbar component with Route Links
- * @Props { content } the content receives the layout's props.children to be rendered on the page
+ * @Props content: the content receives the layout's props.children to be rendered on the page
  * @Returns MainNavBar Component
  * @Author RJ
  * @UpdatedBy RJ
  */
 
-/* eslint-disable react/no-children-prop */
-/* eslint-disable react/no-array-index-key */
 import React, { useState } from 'react';
 import { Divider, Drawer, List, Typography } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
@@ -46,11 +44,11 @@ function MainNavbar({ content }) {
             </div>
             <List>
                 <Typography className={classes.navTitle}>Main</Typography>
-                {Main.map((items, index) => (
+                {Main.map(items => (
                     <NavlinkItems
-                        key={index}
-                        id={index}
+                        key={items.id}
                         path={items.path}
+                        exact={items.exact}
                         content={items.sidebar}
                         pic={items.logo}
                     />
@@ -59,9 +57,9 @@ function MainNavbar({ content }) {
                 <Typography className={classes.navTitle} gutterBottom>
                     Page Manager
                 </Typography>
-                {PageManager.map((items, index) => (
+                {PageManager.map(items => (
                     <NavlinkItems
-                        key={index}
+                        key={items.id}
                         path={items.path}
                         content={items.sidebar}
                         pic={items.logo}
@@ -110,12 +108,9 @@ function MainNavbar({ content }) {
                     {drawer}
                 </Drawer>
                 <div className={classes.sidebar}>
-                    <Drawer
-                        classes={{ paper: classes.drawerPaper }}
-                        variant="permanent"
-                        children={drawer}
-                        open
-                    />
+                    <Drawer classes={{ paper: classes.drawerPaper }} variant="permanent" open>
+                        {drawer}
+                    </Drawer>
                 </div>
             </nav>
             <main className={classes.content}>{content}</main> {/* content of the page */}

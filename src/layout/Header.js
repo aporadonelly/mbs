@@ -1,8 +1,7 @@
-/* eslint-disable react/no-children-prop */
 /**
  * @Name Header
  * @Description Renders App Bar for the MainNavBar Component
- * @Props { drawerToggle } passes the function that toggles the menubar drawer when it is on mobile state
+ * @Props drawerToggle: passes the function that toggles the menubar drawer when it is on mobile state
  * @Returns AppBar Component with Logout
  * @Author RJ
  * @pdatedBy RJ
@@ -27,7 +26,7 @@ const Header = ({ drawerToggle }) => {
 
     return (
         <div>
-            <AppBar position="fixed" className={classes.appBar}>
+            <AppBar position="fixed" className={classes.appBar} data-test="Header_AppBar_Component">
                 <Toolbar>
                     <IconButton
                         color="inherit"

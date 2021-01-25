@@ -70,7 +70,7 @@ const MainNavBarStyles = makeStyles(theme => ({
         }
     },
     pearlPayLogo: {
-        width: '6rem',
+        width: '45%',
         margin: '1rem 3.1rem'
     }
 }));

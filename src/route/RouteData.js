@@ -1,7 +1,7 @@
 /**
  * @Name RouteData
  * @Description Orginizes the url path, sidebar name, logo and their own component
- * @Returns {object} of each data and automatically renders it based on their own route
+ * @Returns  Passes the data of the path, sidebar name and component and automatically renders it based on their own route
  * @Author RJ
  * @UpdatedBy RJ
  */
@@ -34,7 +34,9 @@ import Shop from '../pages/Shop';
 
 const Main = [
     {
-        path: '/dashboard',
+        id: 1,
+        path: '/',
+        exact: true,
         sidebar: 'Dashboard',
         logo: (
             <DashboardIcon
@@ -47,6 +49,7 @@ const Main = [
         main: () => <Dashboard />
     },
     {
+        id: 2,
         path: '/bank-details',
         sidebar: 'Bank Details',
         logo: (
@@ -60,6 +63,7 @@ const Main = [
         main: () => <BankDetails />
     },
     {
+        id: 3,
         path: '/theme-manager',
         sidebar: 'Theme Manager',
         logo: (
@@ -75,6 +79,7 @@ const Main = [
 ];
 const PageManager = [
     {
+        id: 4,
         path: '/branches',
         sidebar: 'Branches',
         logo: (
@@ -88,6 +93,7 @@ const PageManager = [
         main: () => <Branches />
     },
     {
+        id: 5,
         path: '/atms',
         sidebar: 'ATMs',
         logo: (
@@ -101,6 +107,7 @@ const PageManager = [
         main: () => <ATM />
     },
     {
+        id: 6,
         path: '/promos',
         sidebar: 'Promos',
         logo: (
@@ -114,6 +121,7 @@ const PageManager = [
         main: () => <Promos />
     },
     {
+        id: 7,
         path: '/products',
         sidebar: 'Products',
         logo: (
@@ -127,6 +135,7 @@ const PageManager = [
         main: () => <Products />
     },
     {
+        id: 8,
         path: '/inquiries',
         sidebar: 'Inquiries',
         logo: (
@@ -140,6 +149,7 @@ const PageManager = [
         main: () => <Inquiries />
     },
     {
+        id: 9,
         path: '/shop',
         sidebar: 'Shop',
         logo: (
