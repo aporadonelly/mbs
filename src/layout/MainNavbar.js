@@ -12,7 +12,7 @@ import { Divider, Drawer, List, Typography } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 import { PageManager, Main } from '../route/RouteData';
 import NavlinkItems from '../route/NavLinkItems';
-import MainNavBarStyles from '../components/styles/MainNavBarStyles';
+import MainNavBarStyles from './styles/LayoutStyles';
 import { ReactComponent as UserIcon } from '../assets/icons/users.svg';
 import PearlPayLogo from '../assets/logo/cms_logo_white.png';
 import { colors } from '../assets/styleGuide';

@@ -1,8 +1,8 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { colors, fontSizes } from '../../assets/styleGuide';
 
-const drawerWidth = 212;
-const MainNavBarStyles = makeStyles(theme => ({
+const drawerWidth = 250;
+const LayoutStyles = makeStyles(theme => ({
     root: {
         display: 'flex'
     },
@@ -16,7 +16,6 @@ const MainNavBarStyles = makeStyles(theme => ({
             width: `calc(100% - ${drawerWidth}px)`,
             marginLeft: drawerWidth
         },
-        backgroundColor: colors.white,
         height: '5rem'
     },
     menuButton: {
@@ -35,7 +34,11 @@ const MainNavBarStyles = makeStyles(theme => ({
         }
     },
     // necessary for content to be below app bar
-    toolbar: theme.mixins.toolbar,
+    toolbar:
+        (theme.mixins.toolbar,
+        {
+            textAlign: 'center'
+        }),
     drawerPaper: {
         width: drawerWidth,
         backgroundColor: colors.navColor
@@ -46,7 +49,7 @@ const MainNavBarStyles = makeStyles(theme => ({
     },
     linkContent: {
         textDecoration: 'none',
-        color: colors.white
+        color: colors.navLinkColor
     },
     divider: {
         backgroundColor: colors.divider,
@@ -57,13 +60,17 @@ const MainNavBarStyles = makeStyles(theme => ({
         color: colors.navTitleColor,
         marginLeft: '1rem',
         fontSize: fontSizes.navTitles,
-        textTransform: 'uppercase'
+        textTransform: 'uppercase',
+        marginBottom: '0.5rem'
     },
     selected: {
+        color: colors.white,
         '& li': {
-            backgroundColor: 'rgb(255, 255, 255, 0.2) !important',
-            borderLeft: 'solid',
-            borderColor: colors.primary
+            backgroundColor: 'rgb(255, 255, 255, 0.10) !important',
+            borderLeftStyle: 'solid',
+            borderLeftColor: colors.primary,
+            borderLeftWidth: '0.2rem',
+            paddingLeft: '6%'
         },
         '& .icon-color': {
             fill: colors.white
@@ -71,8 +78,8 @@ const MainNavBarStyles = makeStyles(theme => ({
     },
     pearlPayLogo: {
         width: '45%',
-        margin: '1rem 3.1rem'
+        margin: '1rem 0'
     }
 }));
 
-export default MainNavBarStyles;
+export default LayoutStyles;

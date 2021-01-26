@@ -10,7 +10,7 @@
 import { ListItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import MainNavBarStyles from '../components/styles/MainNavBarStyles';
+import MainNavBarStyles from '../layout/styles/LayoutStyles';
 
 const NavLinkItems = ({ path, content, pic, exact }) => {
     const classes = MainNavBarStyles();

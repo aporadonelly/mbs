@@ -11,7 +11,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import MainNavBarStyles from '../components/styles/MainNavBarStyles';
+import { colors } from '../assets/styleGuide';
+import MainNavBarStyles from './styles/LayoutStyles';
 import { logout } from '../actions';
 
 const Header = ({ drawerToggle }) => {
@@ -26,7 +27,11 @@ const Header = ({ drawerToggle }) => {
 
     return (
         <div>
-            <AppBar position="fixed" className={classes.appBar} data-test="Header_AppBar_Component">
+            <AppBar
+                color={colors.white}
+                position="fixed"
+                className={classes.appBar}
+                data-test="Header_AppBar_Component">
                 <Toolbar>
                     <IconButton
                         color="inherit"
