@@ -70,7 +70,7 @@ const LayoutStyles = makeStyles(theme => ({
             borderLeftStyle: 'solid',
             borderLeftColor: colors.primary,
             borderLeftWidth: '0.2rem',
-            paddingLeft: '6%'
+            paddingLeft: '0.8rem'
         },
         '& .icon-color': {
             fill: colors.white
