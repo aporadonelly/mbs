@@ -22,7 +22,7 @@ const NavLinkItems = ({ path, content, pic, exact }) => {
             className={classes.linkContent}
             to={path}>
             <ListItem data-test="NavLink_Item" key={content}>
-                <ListItemIcon data-test="NavLink_Icon" style={{ minWidth: '2.5rem' }}>
+                <ListItemIcon className={classes.navItems} data-test="NavLink_Icon">
                     {pic}
                 </ListItemIcon>
                 <ListItemText

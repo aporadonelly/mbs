@@ -40,7 +40,6 @@ const App = () => {
             <LoginForm onLogin={e => handleLogin(e)} onUpdateField={e => handleUpdateField(e)} />
         );
     }
-
     return (
         <BrowserRouter>
             <RenderPage data-test="App" />

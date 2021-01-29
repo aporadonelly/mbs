@@ -12,7 +12,8 @@ const colors = {
 
 const fontSizes = {
     errorText: '12px',
-    navTitles: '12px'
+    navTitles: '12px',
+    avatarText: '23px'
 };
 
 // Material UI Overrides are found in index.js

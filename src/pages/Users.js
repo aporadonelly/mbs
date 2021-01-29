@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Users = () => (
-    <div>
+    <div data-test="Users_Component">
         <h1>Users page</h1>
     </div>
 );

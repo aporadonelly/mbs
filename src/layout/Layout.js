@@ -10,7 +10,7 @@ import React from 'react';
 import MainNavbar from './MainNavbar';
 
 const Layout = ({ children }) => (
-    <div style={{ margin: '4rem 1rem' }}>
+    <div data-test="layout_component" style={{ margin: '4rem 1rem' }}>
         <MainNavbar content={children} />
     </div>
 );

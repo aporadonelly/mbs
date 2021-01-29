@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Shop = () => (
-    <div>
+    <div data-test="Shop_Component">
         <h1>Shop Page</h1>
     </div>
 );

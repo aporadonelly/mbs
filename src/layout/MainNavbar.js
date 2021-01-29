@@ -22,19 +22,9 @@ function MainNavbar({ content }) {
     const classes = MainNavBarStyles();
     const theme = useTheme();
     const [mobileOpen, setMobileOpen] = useState(false);
-    const [anchorEl, setAnchorEl] = useState(null);
-    const open = Boolean(anchorEl);
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
-    };
-
-    const handleMenu = event => {
-        setAnchorEl(event);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
     };
 
     const drawer = (
@@ -85,14 +75,7 @@ function MainNavbar({ content }) {
 
     return (
         <div data-test="NavBar_Component" className={classes.root}>
-            <Header
-                data-test="NavBar_Header_Component"
-                drawerToggle={handleDrawerToggle}
-                menuToggle={handleMenu}
-                menuAnchor={anchorEl}
-                menuClose={handleClose}
-                openState={open}
-            />
+            <Header data-test="NavBar_Header_Component" drawerToggle={handleDrawerToggle} />
             <nav className={classes.drawer}>
                 <Drawer
                     variant="temporary"
