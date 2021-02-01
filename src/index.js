@@ -23,7 +23,15 @@ const styling = createMuiTheme({
                 textTransform: 'none',
                 '&:hover': {
                     backgroundColor: colors.primary
-                }
+                },
+                fontFamily: 'Inter Regular'
+            },
+            text: {
+                textTransform: 'none',
+                '&:hover': {
+                    backgroundColor: 'transparent'
+                },
+                fontFamily: 'Inter Regular'
             }
         },
         MuiOutlinedInput: {
@@ -31,6 +39,11 @@ const styling = createMuiTheme({
                 height: '0.5em',
                 padding: '1em',
                 caretColor: colors.primary
+            }
+        },
+        MuiTypography: {
+            body: {
+                fontFamily: 'Inter Regular'
             }
         }
     },

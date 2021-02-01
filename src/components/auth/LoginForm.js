@@ -11,34 +11,22 @@
 import React from 'react';
 import { CardContent, CardHeader, Button } from '@material-ui/core';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-import { Info } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
-import { LoginFormStyles, FormStyles } from './styles';
+import { LoginFormStyles, FormStyles } from '../styles';
+import AuthLogo from './AuthLogo';
+import ErrorMessage from '../ErrorMessage';
+import CustomErrorMessage from '../CustomErrorMessage';
 
-const LoginForm = ({ onLogin, onUpdateField }) => {
+const LoginForm = ({ onLogin, onUpdateField, onRenderForgotPasswordForm }) => {
     const classes = { ...FormStyles(), ...LoginFormStyles() };
     const auth = useSelector(state => state.auth);
     const hasError = auth.isFormSubmitted && auth.isAuthInvalid;
-
-    const renderLogo = () => (
-        <img
-            alt="cms-logo"
-            src={require('../assets/images/cms_logo.png').default}
-            className={classes.logo}
-        />
-    );
-
-    const renderErrorMessage = message => (
-        <span className={classes.errorContainer}>
-            <Info color="error" style={{ marginRight: '0.25em' }} fontSize="small" /> {message}
-        </span>
-    );
 
     return (
         <div className={classes.pageContainer}>
             <ValidatorForm onSubmit={onLogin} className={classes.container} autoComplete="off">
                 <div className={classes.card}>
-                    <CardHeader className={classes.header} component={renderLogo} />
+                    <CardHeader className={classes.header} component={AuthLogo} />
                     <CardContent>
                         <div className={classes.fieldContainer}>
                             <div className={classes.label}>Email</div>
@@ -52,8 +40,8 @@ const LoginForm = ({ onLogin, onUpdateField }) => {
                                 placeholder="Enter Email Address"
                                 validators={['required', 'isEmail']}
                                 errorMessages={[
-                                    renderErrorMessage('Email Address is required.'),
-                                    renderErrorMessage('Invalid Email Address format.')
+                                    ErrorMessage('Email Address is required.'),
+                                    ErrorMessage('Invalid Email Address format.')
                                 ]}
                                 value={auth.username}
                             />
@@ -69,40 +57,42 @@ const LoginForm = ({ onLogin, onUpdateField }) => {
                                 type="password"
                                 placeholder="Enter your Password"
                                 validators={['required']}
-                                errorMessages={[renderErrorMessage('Password is required.')]}
+                                errorMessages={[ErrorMessage('Password is required.')]}
                                 value={auth.password}
                             />
-                            {auth.isFormSubmitted && auth.isAuthInvalid ? (
-                                // Display error from aws amplify
-                                <div className={classes.customErrorContainer}>
-                                    <Info
-                                        color="error"
-                                        style={{ marginRight: '0.25em' }}
-                                        fontSize="small"
-                                    />
-                                    {auth.error.code === 'NotAuthorizedException' ||
+                            <CustomErrorMessage
+                                renderCondition={auth.isFormSubmitted && auth.isAuthInvalid}
+                                message={
+                                    auth.error.code === 'NotAuthorizedException' ||
                                     auth.error.code === 'UserNotFoundException'
                                         ? 'Invalid email address and/or password.'
-                                        : auth.error.message}
-                                </div>
-                            ) : (
-                                ''
-                            )}
+                                        : auth.error.message
+                                }
+                            />
                         </div>
                         <Button
                             variant="contained"
                             size="large"
                             color="primary"
                             type="submit"
-                            className={classes.loginBtn}
+                            className={(classes.btn, classes.loginBtn)}
                             data-testid="login-button">
                             Login
                         </Button>
                     </CardContent>
                     <div className={classes.subText}>
                         Forgot Password?
-                        {/* TODO: change <span> to <a> when Forgot Password is implemented */}
-                        <span className={classes.linkText}> Click Here </span>
+                        <Button
+                            onClick={onRenderForgotPasswordForm}
+                            variant="text"
+                            size="small"
+                            color="default"
+                            type="button"
+                            disableRipple
+                            className={classes.linkText}
+                            data-testid="forgot-password-button">
+                            Click Here
+                        </Button>
                     </div>
                 </div>
             </ValidatorForm>

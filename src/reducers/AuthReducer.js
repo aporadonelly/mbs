@@ -18,7 +18,17 @@ const INITIAL_STATE = {
     message: '',
     error: {},
     isFormSubmitted: false,
-    isAuthInvalid: false
+    isAuthInvalid: false,
+    // reset password
+    code: '',
+    newPassword: '',
+    newPasswordCopy: '',
+    isSetPasswordSuccess: false,
+    forgotPasswordError: {},
+    isForgotPasswordFormSubmitted: false,
+    passwordError: {},
+    isSetPasswordFormSubmitted: false,
+    codeError: {}
 };
 
 export default function (state = INITIAL_STATE, action) {
@@ -58,6 +68,34 @@ export default function (state = INITIAL_STATE, action) {
             return {
                 ...INITIAL_STATE,
                 result: results.SUCCESS
+            };
+        }
+        case authActionType.FORGOT_PASSWORD_TRIGGER_SUCCESS: {
+            return {
+                ...state,
+                forgotPasswordError: {},
+                result: results.SUCCESS
+            };
+        }
+        case authActionType.FORGOT_PASSWORD_TRIGGER_FAIL: {
+            return {
+                ...state,
+                forgotPasswordError: action.payload,
+                result: results.FAIL
+            };
+        }
+        case authActionType.VERIFY_FORGOT_PASSWORD_SUCCESS: {
+            return {
+                ...INITIAL_STATE,
+                isSetPasswordSuccess: true,
+                result: results.SUCCESS
+            };
+        }
+        case authActionType.VERIFY_FORGOT_PASSWORD_FAIL: {
+            return {
+                ...state,
+                codeError: action.payload,
+                result: results.FAIL
             };
         }
         case authActionType.LOGOUT_USER_FAIL:

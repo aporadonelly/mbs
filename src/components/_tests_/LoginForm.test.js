@@ -3,7 +3,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import { shallow, configure } from 'enzyme';
 import * as reactRedux from 'react-redux';
 import toJson from 'enzyme-to-json';
-import LoginForm from '../LoginForm';
+import LoginForm from '../auth/LoginForm';
 
 configure({ adapter: new Adapter() });
 

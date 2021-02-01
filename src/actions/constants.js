@@ -10,5 +10,10 @@ export const authActionType = {
     LOGIN_USER_FAIL: 'login_user_fail',
     LOGOUT_USER_SUCCESS: 'logout_user_success',
     LOGOUT_USER_FAIL: 'logout_user_fail',
-    UPDATE_AUTH: 'update_auth'
+    UPDATE_AUTH: 'update_auth',
+    // Forgot Password
+    FORGOT_PASSWORD_TRIGGER_SUCCESS: 'forgot_password_trigger_success',
+    FORGOT_PASSWORD_TRIGGER_FAIL: 'forgot_password_trigger_fail',
+    VERIFY_FORGOT_PASSWORD_SUCCESS: 'verify_forgot_password_success',
+    VERIFY_FORGOT_PASSWORD_FAIL: 'verify_forgot_password_fail'
 };

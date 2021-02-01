@@ -32,6 +32,11 @@ import Products from '../pages/Products';
 import Inquiries from '../pages/Inquiries';
 import Shop from '../pages/Shop';
 
+// Auth Pages
+import Login from '../pages/auth/Login';
+import ForgotPassword from '../pages/auth/ForgotPassword';
+import SetPassword from '../pages/auth/SetPassword';
+
 const Main = [
     {
         id: 1,
@@ -163,4 +168,23 @@ const PageManager = [
         main: () => <Shop />
     }
 ];
-export { PageManager, Main };
+
+const Auth = [
+    {
+        id: 10,
+        path: '/login',
+        main: () => <Login />
+    },
+    {
+        id: 11,
+        path: '/forgot-password',
+        main: () => <ForgotPassword />
+    },
+    {
+        id: 12,
+        path: '/set-password',
+        main: () => <SetPassword />
+    }
+];
+
+export { PageManager, Main, Auth };

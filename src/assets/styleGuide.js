@@ -8,12 +8,18 @@ const colors = {
     navTitleColor: '#687598',
     iconColor: '#0d688a',
     navLinkColor: '#A9BACA',
-    logoutBtnColor: '#DC2626'
+    logoutBtnColor: '#DC2626',
+    grey: '#C7C7C7',
+    success: '#48C762',
+    successIcon: '#059669',
+    successBackgroundColor: '#D1FAE5'
 };
 
 const fontSizes = {
     errorText: '12px',
     navTitles: '12px',
+    subtitleText: '15px',
+    requirementText: '12px',
     avatarText: '23px'
 };
 
