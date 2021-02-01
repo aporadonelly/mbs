@@ -106,9 +106,11 @@ const LayoutStyles = makeStyles(theme => ({
         marginBottom: '2rem'
     },
     dialogContent: {
-        margin: '0 200px 60px 20px',
-        padding: '10px 0 !important',
-        width: '80%'
+        margin: '1.5rem 9rem 3rem 1.5rem',
+        padding: '0 !important',
+        width: '80%',
+        fontFamily: 'Inter Medium',
+        fontSize: fontSizes.avatarText
     },
     logoutStyle: {
         backgroundColor: colors.logoutBtnColor,

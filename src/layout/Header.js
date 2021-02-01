@@ -58,6 +58,11 @@ const Header = ({ drawerToggle }) => {
         setAnchorEl(null);
     };
 
+    const handleAccountClose = () => {
+        setAnchorEl(null);
+        history.push('/');
+    };
+
     const handleDialogOpen = () => {
         setDialogOpen(true);
         setAnchorEl(null);
@@ -133,7 +138,7 @@ const Header = ({ drawerToggle }) => {
                             backgroundColor: 'transparent',
                             fontFamily: 'Inter Regular'
                         }}
-                        onClick={handleClose}>
+                        onClick={handleAccountClose}>
                         Account Settings
                     </MenuItem>
                     <MenuItem
@@ -159,15 +164,15 @@ const Header = ({ drawerToggle }) => {
             {/* Modal */}
 
             <Dialog
-                PaperProps={{ style: { boxShadow: 'none' } }}
+                PaperProps={{ style: { boxShadow: 'none', maxWidth: '512px', maxHeight: '212px' } }}
                 open={dialogOpen}
                 onClose={handleDialogClose}
                 aria-describedby="alert-dialog-description"
                 className={classes.dialogRoot}>
                 <DialogContent className={classes.dialogContent}>
-                    <h2 id="alert-dialog-description">Are you sure you want to logout?</h2>
+                    Are you sure you want to logout?
                 </DialogContent>
-                <DialogActions style={{ padding: '1.2rem' }}>
+                <DialogActions style={{ padding: '1.5rem' }}>
                     <Button
                         data-testid="logoutBtn"
                         disableElevation
