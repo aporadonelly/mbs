@@ -7,7 +7,7 @@ Enzyme.configure({ adapter: new Adapter() });
 
 const mockPath = jest.fn();
 const setup = (props = { path: mockPath }) => shallow(<NavLinkItems {...props} />);
-const findByTest = (wrapper, val) => wrapper.find(`[data-test="${val}"]`);
+const findByTest = (wrapper, val) => wrapper.find(`[data-testid="${val}"]`);
 
 test('renders navbar', () => {
     const wrapper = setup();

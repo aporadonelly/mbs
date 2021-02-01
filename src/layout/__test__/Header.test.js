@@ -18,5 +18,9 @@ test('display Header Component', () => {
             <Header />
         </Provider>
     );
+    wrapper.find('[data-testid="menuBtn"]').hostNodes().simulate('click');
+    wrapper.find('[data-testid="changePassword"]').hostNodes().simulate('click');
+    wrapper.find('[data-testid="logoutMenu"]').hostNodes().simulate('click');
+    wrapper.find('[data-testid="dialogBoxCancel"]').hostNodes().simulate('click');
     expect(toJson(wrapper)).toMatchSnapshot();
 });

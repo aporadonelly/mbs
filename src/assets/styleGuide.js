@@ -7,7 +7,8 @@ const colors = {
     divider: '#F2E8E8',
     navTitleColor: '#687598',
     iconColor: '#0d688a',
-    navLinkColor: '#A9BACA'
+    navLinkColor: '#A9BACA',
+    logoutBtnColor: '#DC2626'
 };
 
 const fontSizes = {

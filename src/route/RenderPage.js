@@ -14,7 +14,7 @@ import Users from '../pages/Users';
 import { PageManager, Main } from './RouteData';
 
 const RenderPage = () => (
-    <Layout data-test="Page_Layout">
+    <Layout data-testid="Page_Layout">
         <Switch>
             {Main.map(items => (
                 <Route
@@ -22,7 +22,7 @@ const RenderPage = () => (
                     exact={items.exact}
                     path={items.path}
                     component={items.main}
-                    data-test={`MainPage_${items.sidebar}`}
+                    data-testid={`MainPage_${items.sidebar}`}
                 />
             ))}
             {PageManager.map(items => (
@@ -31,10 +31,10 @@ const RenderPage = () => (
                     exact={items.exact}
                     path={items.path}
                     component={items.main}
-                    data-test={`PageManager_Page_${items.sidebar}`}
+                    data-testid={`PageManager_Page_${items.sidebar}`}
                 />
             ))}
-            <Route data-test="ManagePage_Users" path="/users" component={() => <Users />} />
+            <Route data-testid="ManagePage_Users" path="/users" component={() => <Users />} />
             <Redirect from="/" to="/login" />
         </Switch>
     </Layout>

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const BankDetails = () => (
-    <div data-test="BankDetails_Component">
+    <div data-testid="bankdetails-component">
         <h1>Bank Details Page</h1>
     </div>
 );

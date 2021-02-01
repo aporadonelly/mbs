@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Promos = () => (
-    <div data-test="Promos_Component">
+    <div data-testid="promos-component">
         <h1>Promos page</h1>
     </div>
 );

@@ -94,12 +94,36 @@ const LayoutStyles = makeStyles(theme => ({
         padding: '0.2rem 1rem'
     },
     menuItemLogout: {
-        color: 'red',
+        color: colors.error,
         justifyContent: 'center',
         fontFamily: 'Inter Regular',
         '&.active, &:hover, &.active:hover': {
             backgroundColor: 'transparent'
         }
+    },
+    dialogRoot: {
+        marginBottom: '2rem'
+    },
+    dialogContent: {
+        margin: '0 200px 60px 20px',
+        padding: '10px 0 !important',
+        width: '80%'
+    },
+    logoutStyle: {
+        backgroundColor: colors.logoutBtnColor,
+        fontFamily: 'Inter Regular',
+        color: colors.white,
+        padding: '10px 30px',
+        '&.active, &:hover, &.active:hover': {
+            backgroundColor: colors.logoutBtnColor
+        },
+        textTransform: 'capitalize'
+    },
+    cancelBtnStyle: {
+        padding: '10px 30px',
+        marginLeft: '1rem !important',
+        textTransform: 'capitalize',
+        fontFamily: 'Inter Regular'
     }
 }));
 

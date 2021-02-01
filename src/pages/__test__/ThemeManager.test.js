@@ -8,10 +8,10 @@ Enzyme.configure({ adapter: new Adapter() });
 const mockPath = jest.fn();
 const setup = (props = { path: mockPath }) => shallow(<ThemeManager {...props} />);
 
-const findByTest = (wrapper, val) => wrapper.find(`[data-test="${val}"]`);
+const findByTest = (wrapper, val) => wrapper.find(`[data-testid="${val}"]`);
 
 test('renders ThemeManager page', () => {
     const wrapper = setup();
-    const fullApp = findByTest(wrapper, 'ThemeManager_Component');
+    const fullApp = findByTest(wrapper, 'thememanager-component');
     expect(fullApp.length).toBe(1);
 });

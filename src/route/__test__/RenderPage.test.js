@@ -10,7 +10,7 @@ Enzyme.configure({ adapter: new Adapter() });
 const mockPath = jest.fn();
 const setup = (props = { path: mockPath }, state = null) => shallow(<RenderPage {...props} />);
 
-const findByTest = (wrapper, val) => wrapper.find(`[data-test="${val}"]`);
+const findByTest = (wrapper, val) => wrapper.find(`[data-testid="${val}"]`);
 
 test('renders Layout Page', () => {
     const wrapper = setup();

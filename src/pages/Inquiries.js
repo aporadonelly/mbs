@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Inquiries = () => (
-    <div data-test="Inquiries_Component">
+    <div data-testid="inquiries-component">
         <h1>Inquiries Page</h1>
     </div>
 );

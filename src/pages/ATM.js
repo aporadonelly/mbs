@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ATM = () => (
-    <div data-test="ATM_Component">
+    <div data-testid="atm-component">
         <h1>ATM Page</h1>
     </div>
 );

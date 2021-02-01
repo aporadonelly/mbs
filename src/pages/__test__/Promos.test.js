@@ -8,10 +8,10 @@ Enzyme.configure({ adapter: new Adapter() });
 const mockPath = jest.fn();
 const setup = (props = { path: mockPath }) => shallow(<Promos {...props} />);
 
-const findByTest = (wrapper, val) => wrapper.find(`[data-test="${val}"]`);
+const findByTest = (wrapper, val) => wrapper.find(`[data-testid="${val}"]`);
 
 test('renders Promos page', () => {
     const wrapper = setup();
-    const fullApp = findByTest(wrapper, 'Promos_Component');
+    const fullApp = findByTest(wrapper, 'promos-component');
     expect(fullApp.length).toBe(1);
 });

@@ -6,34 +6,43 @@
  * @Author RJ
  * @UpdatedBy RJ
  */
-import { AppBar, Avatar, Grid, IconButton, Menu, MenuItem, Toolbar } from '@material-ui/core';
+import {
+    AppBar,
+    Avatar,
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    Grid,
+    IconButton,
+    Menu,
+    MenuItem,
+    Toolbar
+} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import ArrowDownIcon from '@material-ui/icons/ExpandMoreOutlined';
 import MainNavBarStyles from './styles/LayoutStyles';
-import { logout, verifyAuth } from '../actions';
+import { logout } from '../actions';
 
 const Header = ({ drawerToggle }) => {
     const classes = MainNavBarStyles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [dialogOpen, setDialogOpen] = useState(false);
     const open = Boolean(anchorEl);
     const auth = useSelector(state => state.auth);
 
-    useEffect(() => {
-        dispatch(verifyAuth());
-    }, []);
-
-    const UserDetails = {
+    const userDetails = {
         firstName: auth.user.firstName,
         lastName: auth.user.lastName,
         role: auth.user.role
     };
 
-    const Initials = UserDetails.firstName.slice(0, 1) + UserDetails.lastName.slice(0, 1);
+    const initials = userDetails.firstName.slice(0, 1) + userDetails.lastName.slice(0, 1);
 
     const handleLogout = () => {
         dispatch(logout());
@@ -48,14 +57,18 @@ const Header = ({ drawerToggle }) => {
         setAnchorEl(null);
     };
 
+    const handleDialogOpen = () => {
+        setDialogOpen(true);
+        setAnchorEl(null);
+    };
+
+    const handleDialogClose = () => {
+        setDialogOpen(false);
+    };
+
     return (
         <div>
-            <AppBar
-                elevation={0}
-                color="inherit"
-                position="fixed"
-                className={classes.appBar}
-                data-test="Header_AppBar_Component">
+            <AppBar elevation={0} color="inherit" position="fixed" className={classes.appBar}>
                 <Toolbar>
                     <IconButton
                         color="inherit"
@@ -66,56 +79,95 @@ const Header = ({ drawerToggle }) => {
                         <MenuIcon style={{ color: 'black' }} />
                     </IconButton>
                     <Grid container direction="row" justify="flex-end" alignItems="center">
-                        <Avatar className={classes.avatar}>{Initials}</Avatar>
+                        <Avatar className={classes.avatar}>{initials}</Avatar>
                         <p>
-                            {UserDetails.firstName} {UserDetails.lastName}
+                            {userDetails.firstName} {userDetails.lastName}
                             <br />
-                            <span style={{ fontWeight: 'bold' }}>{UserDetails.role}</span>
+                            <span style={{ fontWeight: 'bold' }}>{userDetails.role}</span>
                         </p>
                         <IconButton
-                            aria-label="account of current user"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
+                            data-testid="menuBtn"
+                            disableRipple
                             onClick={handleMenu}
                             color="inherit">
                             <ArrowDownIcon />
                         </IconButton>
-                        <Menu
-                            elevation={0}
-                            style={{
-                                marginTop: '3rem',
-                                width: '20rem'
-                            }}
-                            id="menu-appbar"
-                            anchorEl={anchorEl}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right'
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right'
-                            }}
-                            open={open}
-                            onClose={handleClose}>
-                            <div className={classes.menuItemGroup}>
-                                <MenuItem
-                                    style={{
-                                        backgroundColor: 'transparent',
-                                        fontFamily: 'Inter Regular'
-                                    }}
-                                    onClick={handleClose}>
-                                    Change Password
-                                </MenuItem>
-                                <MenuItem className={classes.menuItemLogout} onClick={handleLogout}>
-                                    Logout
-                                </MenuItem>
-                            </div>
-                        </Menu>
                     </Grid>
                 </Toolbar>
             </AppBar>
+
+            {/* Menu for change password and logout */}
+
+            <Menu
+                elevation={0}
+                style={{
+                    marginTop: '3rem',
+                    width: '20rem'
+                }}
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right'
+                }}
+                keepMounted
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right'
+                }}
+                open={open}
+                onClose={handleClose}>
+                <div className={classes.menuItemGroup}>
+                    <MenuItem
+                        data-testid="changePassword"
+                        disableRipple
+                        style={{
+                            backgroundColor: 'transparent',
+                            fontFamily: 'Inter Regular'
+                        }}
+                        onClick={handleClose}>
+                        Change Password
+                    </MenuItem>
+                    <MenuItem
+                        data-testid="logoutMenu"
+                        disableRipple
+                        className={classes.menuItemLogout}
+                        onClick={handleDialogOpen}>
+                        Logout
+                    </MenuItem>
+                </div>
+            </Menu>
+
+            {/* Modal */}
+
+            <Dialog
+                PaperProps={{ style: { boxShadow: 'none' } }}
+                open={dialogOpen}
+                onClose={handleDialogClose}
+                aria-describedby="alert-dialog-description"
+                className={classes.dialogRoot}>
+                <DialogContent className={classes.dialogContent}>
+                    <h2 id="alert-dialog-description">Are you sure you want to logout?</h2>
+                </DialogContent>
+                <DialogActions style={{ padding: '1.2rem' }}>
+                    <Button
+                        data-testid="logoutBtn"
+                        disableElevation
+                        variant="contained"
+                        onClick={handleLogout}
+                        className={classes.logoutStyle}>
+                        logout
+                    </Button>
+                    <Button
+                        data-testid="dialogBoxCancel"
+                        variant="outlined"
+                        className={classes.cancelBtnStyle}
+                        onClick={handleDialogClose}
+                        color="default">
+                        cancel
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </div>
     );
 };

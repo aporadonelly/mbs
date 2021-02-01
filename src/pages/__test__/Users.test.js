@@ -8,10 +8,10 @@ Enzyme.configure({ adapter: new Adapter() });
 const mockPath = jest.fn();
 const setup = (props = { path: mockPath }) => shallow(<Users {...props} />);
 
-const findByTest = (wrapper, val) => wrapper.find(`[data-test="${val}"]`);
+const findByTest = (wrapper, val) => wrapper.find(`[data-testid="${val}"]`);
 
 test('renders Users page', () => {
     const wrapper = setup();
-    const fullApp = findByTest(wrapper, 'Users_Component');
+    const fullApp = findByTest(wrapper, 'users-component');
     expect(fullApp.length).toBe(1);
 });

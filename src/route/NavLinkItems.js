@@ -17,16 +17,16 @@ const NavLinkItems = ({ path, content, pic, exact }) => {
     return (
         <NavLink
             exact={exact}
-            data-test="NavLink"
+            data-testid="NavLink"
             activeClassName={classes.selected}
             className={classes.linkContent}
             to={path}>
-            <ListItem data-test="NavLink_Item" key={content}>
-                <ListItemIcon className={classes.navItems} data-test="NavLink_Icon">
+            <ListItem data-testid="NavLink_Item" key={content}>
+                <ListItemIcon className={classes.navItems} data-testid="NavLink_Icon">
                     {pic}
                 </ListItemIcon>
                 <ListItemText
-                    data-test="NavLink_Content"
+                    data-testid="NavLink_Content"
                     primary={<Typography style={{ fontSize: '14px' }}>{content}</Typography>}
                 />
             </ListItem>
