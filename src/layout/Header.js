@@ -26,6 +26,7 @@ import { useHistory } from 'react-router-dom';
 import ArrowDownIcon from '@material-ui/icons/ExpandMoreOutlined';
 import MainNavBarStyles from './styles/LayoutStyles';
 import { logout } from '../actions';
+import { colors } from '../assets/styleGuide';
 
 const Header = ({ drawerToggle }) => {
     const classes = MainNavBarStyles();
@@ -76,14 +77,21 @@ const Header = ({ drawerToggle }) => {
                         edge="start"
                         onClick={() => drawerToggle()}
                         className={classes.menuButton}>
-                        <MenuIcon style={{ color: 'black' }} />
+                        <MenuIcon style={{ color: colors.black }} />
                     </IconButton>
-                    <Grid container direction="row" justify="flex-end" alignItems="center">
+                    <Grid
+                        container
+                        direction="row"
+                        justify="flex-end"
+                        alignItems="center"
+                        style={{ marginRight: '1.2rem' }}>
                         <Avatar className={classes.avatar}>{initials}</Avatar>
                         <p>
-                            {userDetails.firstName} {userDetails.lastName}
+                            <span style={{ fontFamily: 'Inter Medium' }}>
+                                {userDetails.firstName} {userDetails.lastName}
+                            </span>
                             <br />
-                            <span style={{ fontWeight: 'bold' }}>{userDetails.role}</span>
+                            {userDetails.role}
                         </p>
                         <IconButton
                             data-testid="menuBtn"
@@ -101,7 +109,7 @@ const Header = ({ drawerToggle }) => {
             <Menu
                 elevation={0}
                 style={{
-                    marginTop: '3rem',
+                    margin: '3rem 1.3rem',
                     width: '20rem'
                 }}
                 id="menu-appbar"
@@ -118,6 +126,16 @@ const Header = ({ drawerToggle }) => {
                 open={open}
                 onClose={handleClose}>
                 <div className={classes.menuItemGroup}>
+                    <MenuItem
+                        data-testid="accountSettings"
+                        disableRipple
+                        style={{
+                            backgroundColor: 'transparent',
+                            fontFamily: 'Inter Regular'
+                        }}
+                        onClick={handleClose}>
+                        Account Settings
+                    </MenuItem>
                     <MenuItem
                         data-testid="changePassword"
                         disableRipple

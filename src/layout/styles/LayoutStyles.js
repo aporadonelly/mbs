@@ -83,19 +83,20 @@ const LayoutStyles = makeStyles(theme => ({
         margin: '1rem 0'
     },
     avatar: {
-        backgroundColor: colors.primary,
+        backgroundColor: `${colors.primary} !important`,
         margin: '1.2rem',
         fontSize: fontSizes.avatarText,
         padding: '0.1rem'
     },
     menuItemGroup: {
-        border: 'solid rgba(0, 0, 0, 0.1) 0.1rem',
-        borderRadius: '0.3rem',
-        padding: '0.2rem 1rem'
+        borderRadius: '0 0.4rem',
+        padding: '0.2rem 1.8rem 0.2rem 0.2rem',
+        margin: '0 0.5rem 1.3rem 0.3rem',
+        boxShadow: '0 12px 12px #0000000A'
     },
     menuItemLogout: {
         color: colors.error,
-        justifyContent: 'center',
+        justifyContent: 'left',
         fontFamily: 'Inter Regular',
         '&.active, &:hover, &.active:hover': {
             backgroundColor: 'transparent'
