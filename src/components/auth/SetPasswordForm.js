@@ -1,8 +1,8 @@
 /**
- * @Name: LoginForm
- * @Description: component for login form
+ * @Name: SetPasswordForm
+ * @Description: component for Set Password Form
  * @Props:
- *      onLogin: function when login button is clicked
+ *      onSetPassword: function to trigger set password
  *      onUpdateField: function for updating text fields
  * @Return: View
  * @Author: Frances
@@ -163,7 +163,7 @@ const SetPasswordForm = ({ onUpdateField, onSetPassword }) => {
                                     className={hasSpecialChars ? classes.activeIcon : classes.icon}
                                     fontSize="small"
                                 />
-                                Must contain include special characters: ~!@#$%^&*()_+
+                                Must contain include special characters: ~!@#$%^&*()_+-
                             </div>
                         </div>
                         <Button

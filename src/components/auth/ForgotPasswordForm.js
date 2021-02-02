@@ -1,9 +1,10 @@
 /**
- * @Name: LoginForm
- * @Description: component for login form
+ * @Name: ForgotPasswordForm
+ * @Description: component for Forgot Password Form
  * @Props:
- *      onLogin: function when login button is clicked
+ *      onForgotPassword: function to trigger forgot password
  *      onUpdateField: function for updating text fields
+ *      onNavigateBack: function to navigate back to login
  * @Return: View
  * @Author: Frances
  * @Last Update By: Frances

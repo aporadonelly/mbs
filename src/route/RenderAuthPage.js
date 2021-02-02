@@ -1,10 +1,10 @@
 /**
- * @Name RenderPage
- * @Description Gets the final Layout Design and Renders it to App
+ * @Name RenderAuthPage
+ * @Description Route for auth pages
  * @Props none
- * @Returns The Default Layout of the Routed Page
- * @Author RJ
- * @UpdatedBy RJ
+ * @Returns routes
+ * @Author Frances
+ * @UpdatedBy Frances
  */
 
 import React from 'react';
@@ -16,10 +16,9 @@ const RenderAuthPage = () => (
         {Auth.map(items => (
             <Route
                 key={items.id}
-                exact={items.exact}
                 path={items.path}
                 component={items.main}
-                data-test={`AuthPage_${items.sidebar}`}
+                data-testid={`AuthPage_${items.label}`}
             />
         ))}
         <Redirect from="/" to="/login" />

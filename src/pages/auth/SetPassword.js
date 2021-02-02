@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { Redirect, useHistory } from 'react-router-dom';
 import { SetPasswordForm, SuccessMessage } from '../../components';
 import { verifyForgotPassword, updateAuth } from '../../actions';
 
@@ -11,6 +10,7 @@ const SetPassword = () => {
     const handleUpdateField = event => {
         dispatch(updateAuth('isSetPasswordFormSubmitted', false));
         dispatch(updateAuth('passwordError', {}));
+        dispatch(updateAuth('codeError', {}));
         dispatch(updateAuth(event.target.name, event.target.value));
     };
 

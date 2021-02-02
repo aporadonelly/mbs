@@ -1,3 +1,13 @@
+/**
+ * @Name: CustomErrorMessage
+ * @Description: component for custom error message
+ * @Props:
+ *      renderCondition: boolean when to display the error message
+ *      message: message to display when error occurs
+ * @Return: View
+ * @Author: Frances
+ * @Last Update By: Frances
+ */
 import { Info } from '@material-ui/icons';
 import React from 'react';
 import { FormStyles } from './styles';

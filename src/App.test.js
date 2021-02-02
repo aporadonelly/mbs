@@ -1,12 +1,14 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import Enzyme, { render } from 'enzyme';
+import Enzyme, { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import Adapter from 'enzyme-adapter-react-16';
 import * as reactRedux from 'react-redux';
 import App from './App';
+import { userStatus } from './reducers/constants';
 
 Enzyme.configure({ adapter: new Adapter() });
 jest.unmock('react-redux');
@@ -17,14 +19,15 @@ const mockStore = configureMockStore({ thunk });
 const store = mockStore({
     auth: {
         username: 'sample@samplecom',
-        password: 'sample'
+        password: 'sample',
+        status: userStatus.LOGGED_OUT
     }
 });
 
-const useDispatchMock = jest.spyOn(reactRedux, 'useSelector');
+const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
 
 beforeEach(() => {
-    useDispatchMock.mockClear();
+    useSelectorMock.mockClear();
 });
 
 jest.mock('react-router-dom', () => ({
@@ -40,9 +43,11 @@ jest.mock('react-router-dom', () => ({
 
 describe('app renders correctly', () => {
     it('display login form', () => {
-        const wrapper = render(
+        const wrapper = shallow(
             <Provider store={store}>
-                <App />
+                <BrowserRouter>
+                    <App />
+                </BrowserRouter>
             </Provider>
         );
         expect(toJson(wrapper)).toMatchSnapshot();

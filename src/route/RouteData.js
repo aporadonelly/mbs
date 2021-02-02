@@ -3,7 +3,7 @@
  * @Description Orginizes the url path, sidebar name, logo and their own component
  * @Returns  Passes the data of the path, sidebar name and component and automatically renders it based on their own route
  * @Author RJ
- * @UpdatedBy RJ
+ * @UpdatedBy Frances
  */
 import React from 'react';
 
@@ -169,20 +169,24 @@ const PageManager = [
     }
 ];
 
+// For auth pages
 const Auth = [
     {
         id: 10,
         path: '/login',
+        label: 'login',
         main: () => <Login />
     },
     {
         id: 11,
         path: '/forgot-password',
+        label: 'forgot-password',
         main: () => <ForgotPassword />
     },
     {
         id: 12,
         path: '/set-password',
+        label: 'set-password',
         main: () => <SetPassword />
     }
 ];

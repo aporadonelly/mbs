@@ -34,7 +34,7 @@ const RenderPage = () => (
                     data-testid={`PageManager_Page_${items.sidebar}`}
                 />
             ))}
-            <Route data-test="ManagePage_Users" path="/users" component={() => <Users />} />
+            <Route data-testid="ManagePage_Users" path="/users" component={() => <Users />} />
             <Redirect from="/login" to="/" />
         </Switch>
     </Layout>

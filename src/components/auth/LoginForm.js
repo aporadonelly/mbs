@@ -4,6 +4,7 @@
  * @Props:
  *      onLogin: function when login button is clicked
  *      onUpdateField: function for updating text fields
+ *      onRenderForgotPasswordForm: function to navigate to ForgotPassword Page
  * @Return: View
  * @Author: Frances
  * @Last Update By: Frances

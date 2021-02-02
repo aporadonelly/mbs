@@ -1,7 +1,14 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import Amplify, { Auth } from 'aws-amplify';
-import { login, logout, verifyAuth, updateAuth } from '../AuthActions';
+import {
+    login,
+    logout,
+    verifyAuth,
+    updateAuth,
+    triggerForgotPassword,
+    verifyForgotPassword
+} from '../AuthActions';
 import { authActionType } from '../constants';
 import { userStatus } from '../../reducers/constants';
 import { awsAuthConfig } from '../../config';
@@ -222,5 +229,117 @@ describe('Auth Action Test', () => {
 
         await store.dispatch(updateAuth(prop, value));
         expect(store.getActions()).toEqual(expectedActions);
+    });
+
+    describe('Auth Actions Forgot Password Trigger Test', () => {
+        it('should handle forgot password trigger', async () => {
+            // MockData
+            const mockData = {
+                username: 'sample@email.com'
+            };
+            // mockResponse
+            const mockResponse = {
+                status: 200
+            };
+            Auth.forgotPassword = jest.fn().mockImplementationOnce(() =>
+                Promise.resolve({
+                    status: 200
+                })
+            );
+
+            const expectedActions = [
+                { type: authActionType.FORGOT_PASSWORD_TRIGGER_SUCCESS, payload: mockResponse }
+            ];
+
+            await store.dispatch(triggerForgotPassword(mockData.username));
+            expect(store.getActions()).toEqual(expectedActions);
+        });
+
+        it('should handle forgot password trigger error', async () => {
+            // MockData
+            const mockData = {
+                username: 'sample@email.com'
+            };
+            // mockResponse
+            const mockResponse = {
+                status: 400,
+                code: 'UserNotFoundException',
+                message: 'User not found.'
+            };
+            Auth.forgotPassword = jest.fn().mockImplementationOnce(() =>
+                Promise.reject({
+                    status: 400,
+                    code: 'UserNotFoundException',
+                    message: 'User not found.'
+                })
+            );
+
+            const expectedActions = [
+                { type: authActionType.FORGOT_PASSWORD_TRIGGER_FAIL, payload: mockResponse }
+            ];
+
+            await store.dispatch(triggerForgotPassword(mockData.username));
+            expect(store.getActions()).toEqual(expectedActions);
+        });
+    });
+
+    describe('Auth Actions Verify Forgot Password Test', () => {
+        it('should handle verify forgot password ', async () => {
+            // MockData
+            const mockData = {
+                username: 'sample@email.com',
+                code: '123456',
+                newPassword: 'P@ssw0rd'
+            };
+            // mockResponse
+            const mockResponse = {
+                status: 200
+            };
+            Auth.forgotPasswordSubmit = jest.fn().mockImplementationOnce(() =>
+                Promise.resolve({
+                    status: 200
+                })
+            );
+
+            const expectedActions = [
+                { type: authActionType.VERIFY_FORGOT_PASSWORD_SUCCESS, payload: mockResponse }
+            ];
+
+            await store.dispatch(
+                verifyForgotPassword(mockData.username, mockData.code, mockData.newPassword)
+            );
+            expect(store.getActions()).toEqual(expectedActions);
+        });
+
+        it('should handle verify forgot password error', async () => {
+            // MockData
+            const mockData = {
+                username: 'sample@email.com',
+                code: '123456',
+                newPassword: 'P@ssw0rd'
+            };
+            // mockResponse
+            const mockResponse = {
+                status: 400,
+                code: 'CodeMismatchException',
+                message: 'Code is invalid'
+            };
+            Auth.forgotPasswordSubmit = jest.fn().mockImplementationOnce(() =>
+                Promise.reject({
+                    status: 400,
+                    code: 'CodeMismatchException',
+                    message: 'Code is invalid'
+                })
+            );
+
+            const expectedActions = [
+                { type: authActionType.VERIFY_FORGOT_PASSWORD_FAIL, payload: mockResponse }
+            ];
+
+            await store.dispatch(
+                verifyForgotPassword(mockData.username, mockData.code, mockData.newPassword)
+            );
+            expect(store.getActions()).toEqual(expectedActions);
+        });
     });
 });

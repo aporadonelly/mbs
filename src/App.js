@@ -17,7 +17,7 @@ const App = () => {
     if (auth.status !== userStatus.LOGGED_IN) {
         return (
             <BrowserRouter>
-                <RenderAuthPage />
+                <RenderAuthPage data-testid="login-page" />
             </BrowserRouter>
         );
     }

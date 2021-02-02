@@ -1,3 +1,11 @@
+/**
+ * @Name: SuccessMessage
+ * @Description: component displaying success message for forgot password
+ * @Props: None
+ * @Return: View
+ * @Author: Frances
+ * @Last Update By: Frances
+ */
 import React from 'react';
 import { Button, CardContent, CardHeader, IconButton } from '@material-ui/core';
 import { Check } from '@material-ui/icons';

@@ -20,7 +20,16 @@ describe(' Auth Reducer test', () => {
         message: '',
         error: {},
         isFormSubmitted: false,
-        isAuthInvalid: false
+        isAuthInvalid: false,
+        code: '',
+        newPassword: '',
+        newPasswordCopy: '',
+        isSetPasswordSuccess: false,
+        forgotPasswordError: {},
+        isForgotPasswordFormSubmitted: false,
+        passwordError: {},
+        isSetPasswordFormSubmitted: false,
+        codeError: {}
     };
 
     it('Returns Initial State', () => {
@@ -134,6 +143,67 @@ describe(' Auth Reducer test', () => {
             ...INITIAL_STATE,
             result: results.FAIL,
             message: 'Failed to Logout User'
+        });
+    });
+
+    it('Returns Forgot Password Trigger Success', () => {
+        expect(
+            AuthReducer(INITIAL_STATE, {
+                type: authActionType.FORGOT_PASSWORD_TRIGGER_SUCCESS
+            })
+        ).toEqual({
+            ...INITIAL_STATE,
+            result: results.SUCCESS
+        });
+    });
+
+    it('Returns Forgot Password Trigger Fail', () => {
+        expect(
+            AuthReducer(INITIAL_STATE, {
+                type: authActionType.FORGOT_PASSWORD_TRIGGER_FAIL,
+                payload: {
+                    code: 'Error',
+                    message: 'There is an error'
+                }
+            })
+        ).toEqual({
+            ...INITIAL_STATE,
+            forgotPasswordError: {
+                code: 'Error',
+                message: 'There is an error'
+            },
+            result: results.FAIL
+        });
+    });
+
+    it('Returns Verify Forgot Password Success', () => {
+        expect(
+            AuthReducer(INITIAL_STATE, {
+                type: authActionType.VERIFY_FORGOT_PASSWORD_SUCCESS
+            })
+        ).toEqual({
+            ...INITIAL_STATE,
+            isSetPasswordSuccess: true,
+            result: results.SUCCESS
+        });
+    });
+
+    it('Returns Verify Forgot Password Success', () => {
+        expect(
+            AuthReducer(INITIAL_STATE, {
+                type: authActionType.VERIFY_FORGOT_PASSWORD_FAIL,
+                payload: {
+                    code: 'Error',
+                    message: 'There is an error'
+                }
+            })
+        ).toEqual({
+            ...INITIAL_STATE,
+            codeError: {
+                code: 'Error',
+                message: 'There is an error'
+            },
+            result: results.FAIL
         });
     });
 });
