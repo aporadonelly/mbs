@@ -43,7 +43,7 @@ const SuccessMessage = () => {
                             data-testid="success-message-button"
                             onClick={() => {
                                 localStorage.clear();
-                                history.push('login');
+                                history.replace('login');
                             }}>
                             Back to login
                         </Button>

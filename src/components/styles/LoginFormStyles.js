@@ -1,5 +1,4 @@
 import { createStyles, makeStyles } from '@material-ui/core/styles';
-// import { colors } from '../../assets/styleGuide';
 
 // Style for Login Component
 const LoginFormStyles = makeStyles(

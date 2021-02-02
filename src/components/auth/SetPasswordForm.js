@@ -163,7 +163,7 @@ const SetPasswordForm = ({ onUpdateField, onSetPassword }) => {
                                     className={hasSpecialChars ? classes.activeIcon : classes.icon}
                                     fontSize="small"
                                 />
-                                Must contain include special characters: ~!@#$%^&*()_+-
+                                Must contain include special characters: ~!@#$%^&*()_-+
                             </div>
                         </div>
                         <Button

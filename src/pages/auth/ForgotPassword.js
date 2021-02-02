@@ -42,7 +42,7 @@ const ForgotPassword = () => {
             onForgotPassword={handleForgotPassword}
             onUpdateField={e => handleUpdateField(e)}
             onNavigateBack={() => {
-                history.push('login');
+                history.replace('login');
             }}
         />
     );
