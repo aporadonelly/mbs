@@ -164,7 +164,7 @@ const Header = ({ drawerToggle }) => {
             {/* Modal */}
 
             <Dialog
-                PaperProps={{ style: { boxShadow: 'none', maxWidth: '512px', maxHeight: '212px' } }}
+                PaperProps={{ style: { boxShadow: 'none', width: '35rem', height: '15rem' } }}
                 open={dialogOpen}
                 onClose={handleDialogClose}
                 aria-describedby="alert-dialog-description"

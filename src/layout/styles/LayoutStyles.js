@@ -106,9 +106,6 @@ const LayoutStyles = makeStyles(theme => ({
         marginBottom: '2rem'
     },
     dialogContent: {
-        margin: '1.5rem 9rem 3rem 1.5rem',
-        padding: '0 !important',
-        width: '80%',
         fontFamily: 'Inter Medium',
         fontSize: fontSizes.avatarText
     },
