@@ -42,6 +42,8 @@ const ForgotPassword = () => {
             onForgotPassword={handleForgotPassword}
             onUpdateField={e => handleUpdateField(e)}
             onNavigateBack={() => {
+                dispatch(updateAuth('isForgotPasswordFormSubmitted', false));
+                dispatch(updateAuth('forgotPasswordError', {}));
                 history.replace('login');
             }}
         />
