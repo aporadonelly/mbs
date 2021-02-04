@@ -15,5 +15,16 @@ export const authActionType = {
     FORGOT_PASSWORD_TRIGGER_SUCCESS: 'forgot_password_trigger_success',
     FORGOT_PASSWORD_TRIGGER_FAIL: 'forgot_password_trigger_fail',
     VERIFY_FORGOT_PASSWORD_SUCCESS: 'verify_forgot_password_success',
-    VERIFY_FORGOT_PASSWORD_FAIL: 'verify_forgot_password_fail'
+    VERIFY_FORGOT_PASSWORD_FAIL: 'verify_forgot_password_fail',
+    // Force Change Password
+    REQUEST_NEW_PASSWORD: 'request_new_password',
+    SET_NEW_PASSWORD_SUCCESS: 'set_new_password_success',
+    SET_NEW_PASSWORD_FAIL: 'set_new_password_fail',
+    // User role
+    FETCH_USER_ROLE_SUCCESS: 'fetch_user_role_success',
+    FETCH_USER_ROLE_FAIL: 'fetch_user_role_fail'
+};
+
+export const awsParameters = {
+    NEW_PASSWORD_REQUIRED: 'NEW_PASSWORD_REQUIRED'
 };

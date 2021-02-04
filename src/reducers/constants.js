@@ -6,5 +6,6 @@ export const results = {
 export const userStatus = {
     LOGGED_IN: 'logged_in',
     LOGGED_OUT: 'logged_out',
-    UNAUTHORIZED: 'unauthorized'
+    UNAUTHORIZED: 'unauthorized',
+    PASSWORD_CHANGE_NEEDED: 'password_change_needed'
 };

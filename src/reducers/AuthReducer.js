@@ -9,7 +9,8 @@ const INITIAL_STATE = {
         jwtToken: null,
         idToken: null,
         refreshToken: null,
-        role: null,
+        roleCode: null,
+        role: '',
         firstName: '',
         lastName: ''
     },
@@ -28,7 +29,9 @@ const INITIAL_STATE = {
     isForgotPasswordFormSubmitted: false,
     passwordError: {},
     isSetPasswordFormSubmitted: false,
-    codeError: {}
+    codeError: {},
+    // force change password
+    userInfo: {}
 };
 
 export default function (state = INITIAL_STATE, action) {
@@ -37,6 +40,35 @@ export default function (state = INITIAL_STATE, action) {
             return {
                 ...state,
                 [action.payload.prop]: action.payload.value
+            };
+        case authActionType.REQUEST_NEW_PASSWORD:
+            return {
+                ...state,
+                status: userStatus.PASSWORD_CHANGE_NEEDED,
+                password: '',
+                userInfo: action.payload,
+                result: results.SUCCESS
+            };
+        case authActionType.SET_NEW_PASSWORD_SUCCESS:
+            const { userData, sessionData } = action.payload;
+            return {
+                ...state,
+                status: userStatus.LOGGED_IN,
+                user: {
+                    email: userData.challengeParam.userAttributes.email,
+                    jwtToken: sessionData.accessToken.jwtToken,
+                    idToken: sessionData.idToken.jwtToken,
+                    refreshToken: sessionData.refreshToken.token,
+                    firstName: userData.challengeParam.userAttributes.given_name,
+                    lastName: userData.challengeParam.userAttributes.family_name,
+                    roleCode: userData.challengeParam.userAttributes[`custom:role`],
+                    role: ''
+                },
+                result: results.SUCCESS
+            };
+        case authActionType.SET_NEW_PASSWORD_FAIL:
+            return {
+                result: results.FAIL
             };
         case authActionType.LOGIN_USER_SUCCESS: {
             const { user, session } = action.payload;
@@ -48,7 +80,8 @@ export default function (state = INITIAL_STATE, action) {
                     jwtToken: session.accessToken.jwtToken,
                     idToken: session.idToken.jwtToken,
                     refreshToken: session.refreshToken.token,
-                    role: session.idToken.payload[`custom:role`],
+                    roleCode: session.idToken.payload[`custom:role`],
+                    role: '',
                     firstName: user.attributes.given_name,
                     lastName: user.attributes.family_name
                 },
@@ -98,6 +131,20 @@ export default function (state = INITIAL_STATE, action) {
                 result: results.FAIL
             };
         }
+        case authActionType.FETCH_USER_ROLE_SUCCESS:
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    role: action.payload.label
+                },
+                result: results.SUCCESS
+            };
+        case authActionType.FETCH_USER_ROLE_FAIL:
+            return {
+                ...state,
+                result: results.FAIL
+            };
         case authActionType.LOGOUT_USER_FAIL:
             return { ...state, result: results.FAIL, message: 'Failed to Logout User' };
         default:

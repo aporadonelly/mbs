@@ -1,5 +1,6 @@
 import Amplify, { Auth } from 'aws-amplify';
-import { authActionType } from './constants';
+import axios from 'axios';
+import { authActionType, awsParameters, SERVER_ADDRESS, CMS_ENDPOINT } from './constants';
 import { awsAuthConfig } from '../config';
 
 Amplify.configure({
@@ -9,18 +10,46 @@ Amplify.configure({
 export const login = (username, password) => async dispatch => {
     try {
         const user = await Auth.signIn(username, password);
-        const session = await Auth.currentSession();
-        dispatch({
-            type: authActionType.LOGIN_USER_SUCCESS,
-            payload: {
-                user,
-                session
-            }
-        });
+        if (user.challengeName === awsParameters.NEW_PASSWORD_REQUIRED) {
+            dispatch({
+                type: authActionType.REQUEST_NEW_PASSWORD,
+                payload: user
+            });
+        } else {
+            const session = await Auth.currentSession();
+            dispatch({
+                type: authActionType.LOGIN_USER_SUCCESS,
+                payload: {
+                    user,
+                    session
+                }
+            });
+        }
     } catch (error) {
         console.log('error', error);
         dispatch({
             type: authActionType.LOGIN_USER_FAIL,
+            payload: error
+        });
+    }
+};
+
+// Set New Password for Initial User
+export const setNewPassword = (user, newPassword) => async dispatch => {
+    try {
+        const data = await Auth.completeNewPassword(user, newPassword);
+        const session = await Auth.currentSession();
+        dispatch({
+            type: authActionType.SET_NEW_PASSWORD_SUCCESS,
+            payload: {
+                userData: data,
+                sessionData: session
+            }
+        });
+    } catch (error) {
+        console.log('error', error);
+        await dispatch({
+            type: authActionType.SET_NEW_PASSWORD_FAIL,
             payload: error
         });
     }
@@ -93,3 +122,19 @@ export const updateAuth = (prop, value) => ({
     type: authActionType.UPDATE_AUTH,
     payload: { prop, value }
 });
+
+// Get user role label
+export const fetchRole = code => async dispatch => {
+    try {
+        const response = await axios.get(`${SERVER_ADDRESS}/${CMS_ENDPOINT}/user-roles/${code}/`);
+        dispatch({
+            type: authActionType.FETCH_USER_ROLE_SUCCESS,
+            payload: response.data
+        });
+    } catch (error) {
+        console.log('error', error);
+        dispatch({
+            type: authActionType.FETCH_USER_ROLE_FAIL
+        });
+    }
+};

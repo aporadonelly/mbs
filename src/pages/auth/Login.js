@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useHistory, useRouteMatch, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateAuth, login } from '../../actions';
@@ -20,6 +20,7 @@ const Login = () => {
     const handleLogin = e => {
         e.preventDefault();
         dispatch(updateAuth('isFormSubmitted', true));
+        dispatch(updateAuth('status', userStatus.LOGGED_OUT));
         if (auth.username !== '' && auth.password !== '') {
             dispatch(login(auth.username, auth.password));
             const path = match.path || { from: { pathname: '/' } };
@@ -29,6 +30,13 @@ const Login = () => {
             }
         }
     };
+
+    useEffect(() => {
+        if (auth.status === userStatus.PASSWORD_CHANGE_NEEDED && auth.isFormSubmitted) {
+            history.push('set-password');
+            dispatch(updateAuth('isFormSubmitted', false));
+        }
+    }, [auth.status]);
 
     const renderForgotPasswordForm = () => {
         history.push('forgot-password');

@@ -4,6 +4,7 @@
  * @Props:
  *      onSetPassword: function to trigger set password
  *      onUpdateField: function for updating text fields
+ *      hasNoCode: boolean to display code field
  * @Return: View
  * @Author: Frances
  * @Last Update By: Frances
@@ -18,7 +19,7 @@ import AuthLogo from './AuthLogo';
 import ErrorMessage from '../ErrorMessage';
 import CustomErrorMessage from '../CustomErrorMessage';
 
-const SetPasswordForm = ({ onUpdateField, onSetPassword }) => {
+const SetPasswordForm = ({ onUpdateField, onSetPassword, hasNoCode }) => {
     const classes = { ...FormStyles(), ...SetPasswordFormStyles() };
     const auth = useSelector(state => state.auth);
     const formRef = useRef(null);
@@ -57,29 +58,34 @@ const SetPasswordForm = ({ onUpdateField, onSetPassword }) => {
                 <div className={classes.card}>
                     <CardHeader className={classes.header} component={AuthLogo} />
                     <CardContent>
-                        <div className={classes.fieldContainer}>
-                            <div className={classes.label}>Code</div>
-                            <TextValidator
-                                error={hasCodeError}
-                                fullWidth
-                                variant="outlined"
-                                onChange={onUpdateField}
-                                name="code"
-                                type="text"
-                                placeholder="Enter Code"
-                                validators={['required']}
-                                errorMessages={[ErrorMessage('Code is required.')]}
-                                value={auth.code}
-                            />
-                            <CustomErrorMessage
-                                renderCondition={hasCodeError}
-                                message={
-                                    auth.codeError.code === 'LimitExceededException'
-                                        ? 'Attempt limit exceeded, please try after some time'
-                                        : 'Incorrect code. Please try again'
-                                }
-                            />
-                        </div>
+                        {hasNoCode ? (
+                            ''
+                        ) : (
+                            <div className={classes.fieldContainer}>
+                                <div className={classes.label}>Code</div>
+                                <TextValidator
+                                    error={hasCodeError}
+                                    fullWidth
+                                    variant="outlined"
+                                    onChange={onUpdateField}
+                                    name="code"
+                                    type="text"
+                                    placeholder="Enter Code"
+                                    validators={['required']}
+                                    errorMessages={[ErrorMessage('Code is required.')]}
+                                    value={auth.code}
+                                />
+                                <CustomErrorMessage
+                                    renderCondition={hasCodeError}
+                                    message={
+                                        auth.codeError.code === 'LimitExceededException'
+                                            ? 'Attempt limit exceeded, please try after some time'
+                                            : 'Incorrect code. Please try again'
+                                    }
+                                />
+                            </div>
+                        )}
+
                         <div className={classes.fieldContainer}>
                             <div className={classes.label}>New Password</div>
                             <TextValidator

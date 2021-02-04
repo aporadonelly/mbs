@@ -20,12 +20,12 @@ import {
     Toolbar
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import ArrowDownIcon from '@material-ui/icons/ExpandMoreOutlined';
 import MainNavBarStyles from './styles/LayoutStyles';
-import { logout } from '../actions';
+import { logout, fetchRole } from '../actions';
 import { colors } from '../assets/styleGuide';
 
 const Header = ({ drawerToggle }) => {
@@ -34,6 +34,7 @@ const Header = ({ drawerToggle }) => {
     const history = useHistory();
     const [anchorEl, setAnchorEl] = useState(null);
     const [dialogOpen, setDialogOpen] = useState(false);
+    const [userRole, setUserRole] = useState('');
     const open = Boolean(anchorEl);
     const auth = useSelector(state => state.auth);
 
@@ -42,6 +43,13 @@ const Header = ({ drawerToggle }) => {
         lastName: auth.user.lastName,
         role: auth.user.role
     };
+
+    // Get user role label
+    useEffect(() => {
+        history.replace('');
+        dispatch(fetchRole(auth.user.roleCode));
+        setUserRole(auth.user.role);
+    }, [auth.user.role]);
 
     const initials = userDetails.firstName.slice(0, 1) + userDetails.lastName.slice(0, 1);
 
@@ -96,7 +104,7 @@ const Header = ({ drawerToggle }) => {
                                 {userDetails.firstName} {userDetails.lastName}
                             </span>
                             <br />
-                            {userDetails.role}
+                            {userRole || <div style={{ height: 17 }} />}
                         </p>
                         <IconButton
                             data-testid="menuBtn"

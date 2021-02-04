@@ -1,7 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SetPasswordForm, SuccessMessage } from '../../components';
-import { verifyForgotPassword, updateAuth } from '../../actions';
+import { verifyForgotPassword, updateAuth, setNewPassword } from '../../actions';
+import { userStatus } from '../../reducers/constants';
 
 const SetPassword = () => {
     const dispatch = useDispatch();
@@ -30,8 +31,32 @@ const SetPassword = () => {
         }
     };
 
+    const handleSetNewPassword = () => {
+        if (auth.newPassword === auth.newPasswordCopy) {
+            dispatch(updateAuth('isSetPasswordFormSubmitted', true));
+            dispatch(setNewPassword(auth.userInfo, auth.newPassword));
+        } else {
+            dispatch(updateAuth('isSetPasswordFormSubmitted', true));
+            dispatch(
+                updateAuth('passwordError', {
+                    code: 'PasswordMismatchError',
+                    message: 'Password does not match. Please try again.'
+                })
+            );
+        }
+    };
+
     if (auth.isSetPasswordSuccess) {
         return <SuccessMessage />;
+    }
+    if (auth.status === userStatus.PASSWORD_CHANGE_NEEDED) {
+        return (
+            <SetPasswordForm
+                onUpdateField={e => handleUpdateField(e)}
+                onSetPassword={() => handleSetNewPassword()}
+                hasNoCode
+            />
+        );
     }
 
     return (
