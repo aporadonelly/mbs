@@ -104,11 +104,9 @@ describe('Auth Action Test', () => {
             };
             // mockResponse
             const mockResponse = {
-                // user: {
                 status: 200,
                 challengeName: 'NEW_PASSWORD_REQUIRED',
                 Session: 'AYABeKssXNDYUjcEWRvanQsSoP'
-                // }
             };
             Auth.signIn = jest.fn().mockImplementationOnce(() =>
                 Promise.resolve({
