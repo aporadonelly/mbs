@@ -51,4 +51,17 @@ describe('renders Set Password Form', () => {
         );
         expect(toJson(wrapper)).toMatchSnapshot();
     });
+
+    it('view of set new password', () => {
+        const wrapper = mount(
+            <Provider store={store}>
+                <SetPasswordForm
+                    onUpdateField={onUpdateField}
+                    onSetPassword={onSetPassword}
+                    hasNoCode
+                />
+            </Provider>
+        );
+        expect(toJson(wrapper)).toMatchSnapshot();
+    });
 });

@@ -66,10 +66,6 @@ export default function (state = INITIAL_STATE, action) {
                 },
                 result: results.SUCCESS
             };
-        case authActionType.SET_NEW_PASSWORD_FAIL:
-            return {
-                result: results.FAIL
-            };
         case authActionType.LOGIN_USER_SUCCESS: {
             const { user, session } = action.payload;
             return {
@@ -140,6 +136,7 @@ export default function (state = INITIAL_STATE, action) {
                 },
                 result: results.SUCCESS
             };
+        case authActionType.SET_NEW_PASSWORD_FAIL:
         case authActionType.FETCH_USER_ROLE_FAIL:
             return {
                 ...state,

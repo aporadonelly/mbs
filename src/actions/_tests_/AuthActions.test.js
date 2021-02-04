@@ -1,13 +1,16 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import Amplify, { Auth } from 'aws-amplify';
+import mockAxios from 'axios';
 import {
     login,
     logout,
     verifyAuth,
     updateAuth,
     triggerForgotPassword,
-    verifyForgotPassword
+    verifyForgotPassword,
+    setNewPassword,
+    fetchRole
 } from '../AuthActions';
 import { authActionType } from '../constants';
 import { userStatus } from '../../reducers/constants';
@@ -16,6 +19,9 @@ import { awsAuthConfig } from '../../config';
 Amplify.configure({
     Auth: awsAuthConfig
 });
+
+jest.mock('axios');
+
 const mockStore = configureMockStore([thunk]);
 
 describe('Auth Action Test', () => {
@@ -84,6 +90,36 @@ describe('Auth Action Test', () => {
 
             const expectedActions = [
                 { type: authActionType.LOGIN_USER_SUCCESS, payload: mockResponse }
+            ];
+
+            await store.dispatch(login(mockData.username, mockData.password));
+            expect(store.getActions()).toEqual(expectedActions);
+        });
+
+        it('should handle user login of new user', async () => {
+            // MockData
+            const mockData = {
+                username: 'sample@email.com',
+                password: 'tempPass'
+            };
+            // mockResponse
+            const mockResponse = {
+                // user: {
+                status: 200,
+                challengeName: 'NEW_PASSWORD_REQUIRED',
+                Session: 'AYABeKssXNDYUjcEWRvanQsSoP'
+                // }
+            };
+            Auth.signIn = jest.fn().mockImplementationOnce(() =>
+                Promise.resolve({
+                    status: 200,
+                    challengeName: 'NEW_PASSWORD_REQUIRED',
+                    Session: 'AYABeKssXNDYUjcEWRvanQsSoP'
+                })
+            );
+
+            const expectedActions = [
+                { type: authActionType.REQUEST_NEW_PASSWORD, payload: mockResponse }
             ];
 
             await store.dispatch(login(mockData.username, mockData.password));
@@ -339,6 +375,146 @@ describe('Auth Action Test', () => {
             await store.dispatch(
                 verifyForgotPassword(mockData.username, mockData.code, mockData.newPassword)
             );
+            expect(store.getActions()).toEqual(expectedActions);
+        });
+    });
+
+    describe('Auth Actions Set New Password Test', () => {
+        it('should handle user set new password', async () => {
+            // MockData
+            const mockData = {
+                userInfo: {
+                    challengeName: 'NEW_PASSWORD_REQUIRED',
+                    Session: 'AYABeKssXNDYUjcEWRvanQsSoP'
+                },
+                password: 'P@ssw0rd1'
+            };
+            // mockResponse
+            const mockResponse = {
+                userData: {
+                    status: 200,
+                    challengeParam: {
+                        userAttributes: {
+                            email: 'sample@email.com',
+                            given_name: 'Sample',
+                            family_name: 'User',
+                            'custom:role': 'staff'
+                        }
+                    }
+                },
+                sessionData: {
+                    status: 200,
+                    accessToken: { jwtToken: 'eyJraWQiOiJsbm1Mb1hxOXJHS3hhZ241TzMzOE40a' },
+                    idToken: {
+                        jwtToken: 'eyJraWQiOiJUa2JDWWpsUVFzQUtyWTRjQ'
+                    },
+                    refreshToken: { token: 'eyJjdHkiOiJKV1QiLCJlbm' }
+                }
+            };
+            Auth.completeNewPassword = jest.fn().mockImplementationOnce(() =>
+                Promise.resolve({
+                    status: 200,
+                    challengeParam: {
+                        userAttributes: {
+                            email: 'sample@email.com',
+                            given_name: 'Sample',
+                            family_name: 'User',
+                            'custom:role': 'staff'
+                        }
+                    }
+                })
+            );
+
+            Auth.currentSession = jest.fn().mockImplementationOnce(() =>
+                Promise.resolve({
+                    status: 200,
+                    accessToken: { jwtToken: 'eyJraWQiOiJsbm1Mb1hxOXJHS3hhZ241TzMzOE40a' },
+                    idToken: {
+                        jwtToken: 'eyJraWQiOiJUa2JDWWpsUVFzQUtyWTRjQ'
+                    },
+                    refreshToken: { token: 'eyJjdHkiOiJKV1QiLCJlbm' }
+                })
+            );
+
+            const expectedActions = [
+                { type: authActionType.SET_NEW_PASSWORD_SUCCESS, payload: mockResponse }
+            ];
+
+            await store.dispatch(setNewPassword(mockData.userInfo, mockData.password));
+            expect(store.getActions()).toEqual(expectedActions);
+        });
+
+        it('User set new password Error', async () => {
+            // MockData
+            const mockData = {
+                userInfo: {
+                    challengeName: 'NEW_PASSWORD_REQUIRED',
+                    Session: 'AYABeKssXNDYUjcEWRvanQsSoP'
+                },
+                password: 'P@ssw0rd1'
+            };
+            // mockResponse
+            const mockResponse = {
+                status: 400,
+                code: 'Error',
+                message: 'An Error Occured'
+            };
+
+            Auth.completeNewPassword = jest.fn().mockImplementationOnce(() =>
+                Promise.reject({
+                    status: 400,
+                    code: 'Error',
+                    message: 'An Error Occured'
+                })
+            );
+
+            const expectedActions = [
+                { type: authActionType.SET_NEW_PASSWORD_FAIL, payload: mockResponse }
+            ];
+
+            await store.dispatch(setNewPassword(mockData.username, mockData.password));
+            expect(store.getActions()).toEqual(expectedActions);
+        });
+    });
+
+    describe('Auth Actions Fetch Role Test', () => {
+        it('should retreive user role ', async () => {
+            const mockResponse = {
+                status: 200,
+                payload: {
+                    code: 'admin',
+                    label: 'Admin'
+                }
+            };
+
+            mockAxios.get.mockImplementationOnce(() =>
+                Promise.resolve({
+                    status: 200,
+                    data: mockResponse
+                })
+            );
+
+            const expectedActions = [
+                { type: authActionType.FETCH_USER_ROLE_SUCCESS, payload: mockResponse }
+            ];
+
+            await store.dispatch(fetchRole('admin'));
+            expect(store.getActions()).toEqual(expectedActions);
+        });
+
+        it('should retreive user role error ', async () => {
+            mockAxios.get.mockImplementationOnce(() =>
+                Promise.reject({
+                    response: {
+                        status: 404,
+                        errorCode: 'CodeNotFound'
+                    }
+                })
+            );
+
+            const expectedActions = [{ type: authActionType.FETCH_USER_ROLE_FAIL }];
+
+            await store.dispatch(fetchRole('manager'));
             expect(store.getActions()).toEqual(expectedActions);
         });
     });

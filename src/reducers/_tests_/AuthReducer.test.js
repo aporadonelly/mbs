@@ -11,7 +11,8 @@ describe(' Auth Reducer test', () => {
             jwtToken: null,
             idToken: null,
             refreshToken: null,
-            role: null,
+            roleCode: null,
+            role: '',
             firstName: '',
             lastName: ''
         },
@@ -29,7 +30,8 @@ describe(' Auth Reducer test', () => {
         isForgotPasswordFormSubmitted: false,
         passwordError: {},
         isSetPasswordFormSubmitted: false,
-        codeError: {}
+        codeError: {},
+        userInfo: {}
     };
 
     it('Returns Initial State', () => {
@@ -76,7 +78,7 @@ describe(' Auth Reducer test', () => {
                         idToken: {
                             jwtToken: 'eyJraWQiOiJUa2JDWWpsUVFzQUtyWTRjQ',
                             payload: {
-                                'custom:role': 'Staff'
+                                'custom:role': 'staff'
                             }
                         },
                         refreshToken: { token: 'eyJjdHkiOiJKV1QiLCJlbm' }
@@ -92,7 +94,8 @@ describe(' Auth Reducer test', () => {
                 refreshToken: 'eyJjdHkiOiJKV1QiLCJlbm',
                 firstName: 'Sample',
                 lastName: 'User',
-                role: 'Staff'
+                roleCode: 'staff',
+                role: ''
             },
             status: userStatus.LOGGED_IN,
             result: results.SUCCESS
@@ -118,7 +121,6 @@ describe(' Auth Reducer test', () => {
                 name: 'error'
             },
             isAuthInvalid: true,
-            // message: 'Incorrect Username or Password',
             result: results.FAIL
         });
     });
@@ -203,6 +205,109 @@ describe(' Auth Reducer test', () => {
                 code: 'Error',
                 message: 'There is an error'
             },
+            result: results.FAIL
+        });
+    });
+
+    it('Returns Request New Password Success', () => {
+        expect(
+            AuthReducer(INITIAL_STATE, {
+                type: authActionType.REQUEST_NEW_PASSWORD,
+                payload: {
+                    challengeName: 'NEW_PASSWORD_REQUIRED',
+                    Session: 'AYABeKssXNDYUjcEWRvanQsSoP'
+                }
+            })
+        ).toEqual({
+            ...INITIAL_STATE,
+            status: userStatus.PASSWORD_CHANGE_NEEDED,
+            password: '',
+            userInfo: {
+                challengeName: 'NEW_PASSWORD_REQUIRED',
+                Session: 'AYABeKssXNDYUjcEWRvanQsSoP'
+            },
+            result: results.SUCCESS
+        });
+    });
+
+    it('Returns Set New Passsword Success', () => {
+        expect(
+            AuthReducer(INITIAL_STATE, {
+                type: authActionType.SET_NEW_PASSWORD_SUCCESS,
+                payload: {
+                    userData: {
+                        challengeParam: {
+                            userAttributes: {
+                                email: 'sample@email.com',
+                                given_name: 'Sample',
+                                family_name: 'User',
+                                'custom:role': 'staff'
+                            }
+                        }
+                    },
+                    sessionData: {
+                        accessToken: { jwtToken: 'eyJraWQiOiJsbm1Mb1hxOXJHS3hhZ241TzMzOE40a' },
+                        idToken: {
+                            jwtToken: 'eyJraWQiOiJUa2JDWWpsUVFzQUtyWTRjQ'
+                        },
+                        refreshToken: { token: 'eyJjdHkiOiJKV1QiLCJlbm' }
+                    }
+                }
+            })
+        ).toEqual({
+            ...INITIAL_STATE,
+            user: {
+                email: 'sample@email.com',
+                jwtToken: 'eyJraWQiOiJsbm1Mb1hxOXJHS3hhZ241TzMzOE40a',
+                idToken: 'eyJraWQiOiJUa2JDWWpsUVFzQUtyWTRjQ',
+                refreshToken: 'eyJjdHkiOiJKV1QiLCJlbm',
+                firstName: 'Sample',
+                lastName: 'User',
+                roleCode: 'staff',
+                role: ''
+            },
+            status: userStatus.LOGGED_IN,
+            result: results.SUCCESS
+        });
+    });
+
+    it('Returns Set New Passsword Fail', () => {
+        expect(
+            AuthReducer(INITIAL_STATE, {
+                type: authActionType.SET_NEW_PASSWORD_FAIL
+            })
+        ).toEqual({
+            ...INITIAL_STATE,
+            result: results.FAIL
+        });
+    });
+
+    it('Returns Fetch User Role Success', () => {
+        expect(
+            AuthReducer(INITIAL_STATE, {
+                type: authActionType.FETCH_USER_ROLE_SUCCESS,
+                payload: {
+                    code: 'admin',
+                    label: 'Admin'
+                }
+            })
+        ).toEqual({
+            ...INITIAL_STATE,
+            user: {
+                ...INITIAL_STATE.user,
+                role: 'Admin'
+            },
+            result: results.SUCCESS
+        });
+    });
+
+    it('Returns Fetch User Role Fail', () => {
+        expect(
+            AuthReducer(INITIAL_STATE, {
+                type: authActionType.FETCH_USER_ROLE_FAIL
+            })
+        ).toEqual({
+            ...INITIAL_STATE,
             result: results.FAIL
         });
     });

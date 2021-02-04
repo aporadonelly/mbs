@@ -7,6 +7,7 @@ import toJson from 'enzyme-to-json';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import SetPassword from '../../auth/SetPassword';
+import { userStatus } from '../../../reducers/constants';
 
 configure({ adapter: new Adapter() });
 jest.unmock('react-redux');
@@ -47,6 +48,21 @@ const successStore = mockStore({
     }
 });
 
+// mock auth reducer state
+const setPasswordStore = mockStore({
+    auth: {
+        status: userStatus.PASSWORD_CHANGE_NEEDED,
+        newPassword: '',
+        codeError: {
+            code: ''
+        },
+        passwordError: {
+            code: '',
+            message: ''
+        }
+    }
+});
+
 jest.mock('react-router-dom', () => ({
     useRouteMatch: jest.fn().mockReturnValue({
         location: '/'
@@ -72,6 +88,16 @@ describe('renders SetPassword Page', () => {
     it('success view', () => {
         const wrapper = render(
             <Provider store={successStore}>
+                <SetPassword />
+            </Provider>
+        );
+
+        expect(toJson(wrapper)).toMatchSnapshot();
+    });
+
+    it('view of set password for initial user', () => {
+        const wrapper = render(
+            <Provider store={setPasswordStore}>
                 <SetPassword />
             </Provider>
         );

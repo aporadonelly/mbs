@@ -1,26 +1,53 @@
-import 'jsdom-global/register'; // Without need of adding code in beforeEach and afterEach.
 import React from 'react';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import toJson from 'enzyme-to-json';
-import Enzyme, { mount } from 'enzyme';
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'; // enzyme adapter for the use of 'mount'
+import Enzyme, { render } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+import configureMockStore from 'redux-mock-store';
+import * as reactRedux from 'react-redux';
 import Header from '../Header';
-import reducers from '../../reducers';
+import { userStatus } from '../../reducers/constants';
 
 Enzyme.configure({ adapter: new Adapter() });
+const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
 
-test('display Header Component', () => {
-    const store = createStore(reducers, applyMiddleware(thunk));
-    const wrapper = mount(
-        <Provider store={store}>
-            <Header />
-        </Provider>
-    );
-    wrapper.find('[data-testid="menuBtn"]').hostNodes().simulate('click');
-    wrapper.find('[data-testid="changePassword"]').hostNodes().simulate('click');
-    wrapper.find('[data-testid="logoutMenu"]').hostNodes().simulate('click');
-    wrapper.find('[data-testid="dialogBoxCancel"]').hostNodes().simulate('click');
-    expect(toJson(wrapper)).toMatchSnapshot();
+beforeEach(() => {
+    useSelectorMock.mockClear();
+});
+
+const mockStore = configureMockStore({ thunk });
+
+// mock auth reducer state
+const store = mockStore({
+    auth: {
+        username: '',
+        password: '',
+        status: userStatus.LOGGED_IN,
+        user: {
+            roleCode: 'admin',
+            role: 'Admin',
+            firstName: 'Sample',
+            lastName: 'User'
+        }
+    }
+});
+
+jest.mock('react-router-dom', () => ({
+    useHistory: jest.fn().mockReturnValue({
+        history: {
+            replace: jest.fn()
+        }
+    })
+}));
+
+describe('Header', () => {
+    it('displays header component', () => {
+        const wrapper = render(
+            <Provider store={store}>
+                <Header />
+            </Provider>
+        );
+        expect(toJson(wrapper)).toMatchSnapshot();
+    });
 });
