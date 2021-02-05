@@ -58,7 +58,9 @@ const SetPasswordForm = ({ onUpdateField, onSetPassword, hasNoCode }) => {
                 <div className={classes.card}>
                     <CardHeader className={classes.header} component={AuthLogo} />
                     <CardContent>
-                        {hasNoCode === false && (
+                        {hasNoCode ? (
+                            ''
+                        ) : (
                             <div className={classes.fieldContainer}>
                                 <div className={classes.label}>Code</div>
                                 <TextValidator
