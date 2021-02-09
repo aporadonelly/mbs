@@ -28,3 +28,10 @@ export const authActionType = {
 export const awsParameters = {
     NEW_PASSWORD_REQUIRED: 'NEW_PASSWORD_REQUIRED'
 };
+
+export const productsActionType = {
+    PRODUCTS_CREATE_SUCCESS: 'product_create_success',
+    PRODUCTS_CREATE_ERROR: 'product_create_error',
+    CATEGORY_FETCH_SUCCESS: 'category_fetch_success',
+    CATEGORY_FETCH_ERROR: 'category_fetch_error'
+};

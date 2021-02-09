@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { userStatus } from './reducers/constants';
-import { verifyAuth } from './actions';
+import { verifyAuth, getCategory } from './actions';
 import RenderPage from './route/RenderPage';
 import RenderAuthPage from './route/RenderAuthPage';
 
@@ -12,6 +12,7 @@ const App = () => {
 
     useEffect(() => {
         dispatch(verifyAuth());
+        dispatch(getCategory());
     }, []);
 
     if (auth.status !== userStatus.LOGGED_IN) {
